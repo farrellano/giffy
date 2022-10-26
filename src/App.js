@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React, { useState } from "react";
+import { Route } from "wouter";
+
+import Detail from "./pages/Detail/Index";
+import Home from "./pages/Home/Index";
+import Search from "./pages/SearchResults/Index";
+import Context from "./context/StaticContext";
+import { GifsContextProvider } from "./context/GifsContexProvider";
 
 function App() {
+  const [keyword, setKeyword] = useState("panda");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Context.Provider value={{ name: "fas 2", suscribite: true }}>
+      <div className="App">
+        <section className="App-content">
+          <GifsContextProvider>
+            <Route component={Home} path="/" />
+
+            <Route component={Search} path="/search/:keyword" />
+
+            <Route component={Detail} path="/detail/:id" />
+          </GifsContextProvider>
+        </section>
+      </div>
+    </Context.Provider>
   );
 }
 
