@@ -3,6 +3,7 @@ import ListOfGifs from "components/ListOfGifs/listOfGifs";
 import { useGifs } from "hooks/useGifs";
 import useNearScreen from "hooks/useNearScreen";
 import debounce from "just-debounce-it";
+import { Helmet } from "react-helmet";
 
 export default function Search({ params }) {
   const { keyword } = params;
@@ -12,6 +13,10 @@ export default function Search({ params }) {
     externalRef: loading ? null : externalRef,
     once: false,
   });
+
+  const title = gifs
+    ? `${gifs.length} resultados de ${decodeURI(keyword)}`
+    : "";
 
   const debounceHandleNextPage = useCallback(
     debounce(() => setPage((prevPage) => prevPage + 1), 1000),
@@ -34,6 +39,10 @@ export default function Search({ params }) {
         <div>Cargando...</div>
       ) : (
         <>
+          <Helmet>
+            <title>{title}</title>
+            <meta name="description" content={title}></meta>
+          </Helmet>
           <ListOfGifs gifs={gifs} />
           <div id="visor" ref={externalRef}></div>
         </>

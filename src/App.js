@@ -21,6 +21,7 @@ function App() {
             <Route component={Search} path="/search/:keyword" />
 
             <Route component={Detail} path="/detail/:id" />
+            <Route component={() => <h1>404 Error :(</h1>} path="/404" />
           </GifsContextProvider>
         </section>
       </div>
